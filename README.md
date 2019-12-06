@@ -2,8 +2,9 @@
 
 Boilerplate for React, ContextApi, Express, Mysql2
 
-# backend/.env
+# Config 
 
+backend/.env
 Change database info
 
 # Set up

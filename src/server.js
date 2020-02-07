@@ -1,53 +1,78 @@
 // Require Dependencies
 
-const express = require("express");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const helmet = require("helmet");
+const express = require('express');
+const session = require('express-session');
+// const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const helmet = require('helmet');
+const passport = require('passport');
 
-const logger = require("./util/logger");
+// const logger = require('./util/logger');
+const connectToDatabase = require('./config/database');
+const { env, port, secretKey } = require('./config/config');
 
-// Load .env Enviroment Variables to process.env
+const TWO_HOURS = 1000 * 60 * 60 * 2;
+const IN_PRODUCTION = env === 'production';
 
-require("mandatoryenv").load([
-  "DB_HOST",
-  "DB_DATABASE",
-  "DB_USER",
-  "DB_PASSWORD",
-  "PORT",
-  "SECRET_KEY"
-]);
-
-const { PORT } = process.env;
+// Database connection
+connectToDatabase();
 
 // Instantiate an Express Application
 const app = express();
+app.use(session({
+  secret: secretKey,
+  resave: false,
+  rolling: true,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: TWO_HOURS,
+    sameSite: true,
+    secure: IN_PRODUCTION,
+  },
+}));
+
+// Require Facebook Strategy, Initialize passport
+require('./config/passport')(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Configure Express App Instance
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(
+  express.json({
+    limit: '50mb',
+  }),
+);
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: '10mb',
+  }),
+);
 
 // Configure custom logger middleware
-app.use(logger.dev, logger.combined);
+// app.use(logger.dev, logger.combined);
 
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(cors());
 app.use(helmet());
 
 // This middleware adds the json header to every response
-app.use("*", (req, res, next) => {
-  res.setHeader("Content-Type", "application/json");
+app.use('*', (req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');
   next();
 });
 
 // Assign Routes
-
-app.use("/", require("./routes/router.js"));
+app.use('/api/v1/auth/facebook', require('./routes/auth'));
 
 // Handle not valid route
-app.use("*", (req, res) => {
-  res.status(404).json({ status: false, message: "Endpoint Not Found" });
+app.use('*', (req, res) => {
+  res.status(404).json({
+    status: false,
+    message: 'Endpoint Not Found',
+  });
 });
 
 // Open Server on selected Port
-app.listen(PORT, () => console.info("Server listening on port ", PORT));
+app.listen(port);

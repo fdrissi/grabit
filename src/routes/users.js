@@ -44,7 +44,7 @@ const upload = multer({
     const mimeType = fileTypes.test(file.mimetype);
     return extname && mimeType
       ? callback(null, true)
-      : callback('Invalid Profile Image');
+      : callback('Invalid Profile Image', false);
   },
 });
 
@@ -64,7 +64,7 @@ router.get('/:id', isAuthenticated, async (req, res) => {
   try {
     const user = await User.findOne({ id });
     if (!user) {
-      return res.status(400).json({ msg: 'User not found ' });
+      return res.status(404).json({ msg: 'User not found' });
     }
     return res.json({ user });
   } catch (error) {
@@ -87,9 +87,10 @@ router.put('/update',
     const { name, email, phone } = req.body;
     const userId = req.user.id;
     try {
+      // Find user and update data
       const user = await User.findOne({ id: userId });
       if (!user) {
-        return res.status(400).json({ msg: 'Invalid User' });
+        return res.status(404).json({ msg: 'User not found' });
       }
       user.name = name;
       user.email = email;
@@ -111,7 +112,9 @@ router.post('/image',
     const { userId } = req.user;
     try {
       // Check if uploaded image is valid
-      await Jimp.read(fullPath);
+      const image = await Jimp.read(fullPath);
+      console.log(image) //eslint-disable-line
+      // Add Validate height and width
       // Everything went fine.
       const user = await User.findOneAndUpdate(
         { id: userId },

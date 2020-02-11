@@ -1,23 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
-import { useUserStore } from "../../Context/appStore";
+
+import Landing from "../landing/Landing";
+import SignUp from "../signUp/SignUp";
+import EditProfile from "../editProfile/EditProfile";
+//import PrivateRoute from "./PrivateRoute";
 
 const Routes = () => {
-  const [{ auth }] = useUserStore();
-
-  useEffect(() => {
-    socket.emit("login", auth.userInfo.id);
-  }, [auth]);
 
   return (
     <div style={{ flex: 1 }}>
       <Switch>
-        {/*
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <PrivateRoute auth={auth} exact path="/setting" component={Setting} />
-          */}
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/signup/customer" component={SignUp} />
+        <Route exact path="/signup/driver" component={SignUp} />
+        <Route exact path="/edit" component={EditProfile} />
+        {/* <PrivateRoute auth={auth} exact path="/setting" component={Setting} /> */} 
       </Switch>
     </div>
   );

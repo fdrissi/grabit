@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { CssBaseline } from "@material-ui/core"
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+import Navbar from "./Components/inc/Navbar"
+import Footer from "./Components/inc/Footer"
+import Routes from "./Components/routing/Routes";
 
 function App() {
+  const [theme, ] = useState({
+    palette: {
+      background: {
+        default: window.location.pathname !== '/' && "#F2F2F2"
+      }
+    }
+  });
+
+  const muiTheme = createMuiTheme(theme);
+
   return (
-    <div className="App">
-      <h1>React Node BoilerPlate</h1>
-    </div>
+    <MuiThemeProvider theme={muiTheme}>
+    <Router>
+      <CssBaseline />
+      <div
+          style={{
+            display: "flex",
+            minHeight: "100vh",
+            flexDirection: "column"
+          }}
+        >
+        <Navbar />
+        <Route component={Routes} />
+        <Footer style={{ flex: 1 }} />
+      </div>
+    </Router>
+    </MuiThemeProvider>
   );
 }
 

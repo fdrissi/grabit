@@ -26,8 +26,10 @@ const facebookAuth = (passport) => {
       'first_name',
       'last_name',
     ],
+    passReqToCallback: true,
   },
-  async (accessToken, refreshToken, profile, done) => {
+  async (req, accessToken, refreshToken, profile, done) => {
+    const { userType } = req.session;
     const { _json: fullName } = profile;
     const { first_name: firstName, last_name: lastName } = fullName;
     try {
@@ -35,13 +37,16 @@ const facebookAuth = (passport) => {
         facebookId: profile.id,
       });
       if (user) {
+        // User already registred
         return done(null, user);
       }
       const newUser = new User({
         facebookId: profile.id,
         name: `${firstName} ${lastName}`,
+        userType,
       });
       await newUser.save();
+      delete req.session.userType;
       return done(null, newUser);
     } catch (error) {
       return done(error, false);

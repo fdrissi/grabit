@@ -8,7 +8,12 @@ const {
 // @route   Get /api/v1/auth/facebook
 // @desc    Authenticated through Facebook Strategy
 // @access  Public
-router.get('/',
+router.get('/login/:userType',
+  (req, res, next) => {
+    const { userType } = req.params;
+    req.session.userType = userType;
+    next();
+  },
   passport.authenticate('facebook'));
 
 // @route   Get /api/v1/auth/facebook/callback
@@ -19,6 +24,7 @@ router.get('/callback',
     failureRedirect: `${frontUrl}/login`,
   }),
   (req, res) => {
+    // console.log(req.params, req.query); //eslint-disable-line
     // Old user, redirect home.
     if (req.user.email) {
       return res.redirect(frontUrl);

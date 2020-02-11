@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -20,7 +21,8 @@ const useStyles = makeStyles(theme => ({
   	fontStyle: "italic",
   	fontWeight: "bold",
   	letterSpacing: "-2.5px",
-  	lineHeight: "58px",
+    lineHeight: "58px",
+    flexGrow: 1,
   },
 }));
 
@@ -38,7 +40,8 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
           Grabit
           </Typography>
-          <Button color="inherit">Login</Button>
+          
+          <Button color="primary"><AccountCircleIcon /></Button>
         </Toolbar>
       </AppBar>
     </div>

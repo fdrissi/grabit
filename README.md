@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Node-React-BoilerPlate
 
 Boilerplate for React, ContextApi, Express, Mysql2
@@ -67,3 +68,7 @@ Run the following command withing the `backend` folder:
 ```
 npm run dev
 ```
+=======
+# Grabit
+An on demand service that picks-up anything you requested through the app and delivers it to your door within one hour.
+>>>>>>> 690f75597af793fea47a6ee5d6c9a147ea864151

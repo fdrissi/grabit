@@ -6,11 +6,11 @@ const MongoSchema = mongoose.Schema;
 const orderSchema = new MongoSchema({
   customer: {
     type: MongoSchema.Types.ObjectId,
-    ref: 'users',
+    ref: 'Customer',
   },
   deliveryMan: {
     type: MongoSchema.Types.ObjectId,
-    ref: 'users',
+    ref: 'Courier',
   },
   description: {
     type: String,
@@ -36,5 +36,5 @@ const orderSchema = new MongoSchema({
   },
 });
 
-const Order = mongoose.model('user', orderSchema);
+const Order = mongoose.model('Order', orderSchema);
 module.exports = Order;

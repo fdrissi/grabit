@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { CssBaseline } from "@material-ui/core"
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-import Navbar from "./Components/inc/Navbar"
-import Footer from "./Components/inc/Footer"
+import Navbar from "./Components/header/Navbar"
+import Footer from "./Components/footer/Footer"
 import Routes from "./Components/routing/Routes";
 
 function App() {

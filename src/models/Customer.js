@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const MongoSchema = mongoose.Schema;
+const { Schema } = mongoose;
 
 
-const userSchema = new MongoSchema({
+const customerSchema = new Schema({
   facebookId: {
     type: String,
     required: true,
@@ -17,10 +17,7 @@ const userSchema = new MongoSchema({
   profileImage: {
     type: String,
   },
-  userType: {
-    type: String,
-  },
 });
 
-const User = mongoose.model('user', userSchema);
-module.exports = User;
+const Customer = mongoose.model('Customer', customerSchema);
+module.exports = Customer;

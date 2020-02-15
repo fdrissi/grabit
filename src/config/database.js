@@ -8,8 +8,10 @@ const connectToDatabase = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    console.log("Db connected"); //eslint-disable-line
   } catch (error) {
     // Exit process with failure
+    console.log(error); //eslint-disable-line
     process.exit(1);
   }
 };

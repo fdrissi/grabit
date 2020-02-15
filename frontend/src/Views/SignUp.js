@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SignUpCard from "./SignUpCard";
+import SignUpCard from "../Components/pages/SignUpCard";
 import { makeStyles, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({

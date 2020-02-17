@@ -42,6 +42,9 @@ const courierSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  type: {
+    type: String,
+  },
 }, { autoIndex: false });
 
 courierSchema.index({ location: '2dsphere' });

@@ -50,10 +50,12 @@ const facebookAuth = (passport) => {
         ? new Customer({
           facebookId: profile.id,
           name: `${firstName} ${lastName}`,
+          type: userType,
         })
         : new Courier({
           facebookId: profile.id,
           name: `${firstName} ${lastName}`,
+          type: userType,
         });
 
       await newUser.save();

@@ -17,6 +17,9 @@ const customerSchema = new Schema({
   profileImage: {
     type: String,
   },
+  type: {
+    type: String,
+  },
 });
 
 const Customer = mongoose.model('Customer', customerSchema);

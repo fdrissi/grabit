@@ -1,8 +1,11 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core';
-import { Container, Grid } from "@material-ui/core"
+import { makeStyles, Box } from '@material-ui/core';
+import { Container, Grid, Button} from "@material-ui/core"
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import MotorcycleIcon from '@material-ui/icons/Motorcycle';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   container: {
     position: "relative",
     height: "656px",
@@ -19,32 +22,53 @@ const useStyles = makeStyles({
   brand: {
     height: "58px",
     width: "166px",
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    },
   },
   signButton: {
 
   },
   weDeliverText: {
-    height: "146px",
     width: "100%",
     color: "#FFFFFF",
     fontFamily: "Montserrat",
-    fontSize: "62px",
+    fontSize: "4em",
     fontStyle: "italic",
     fontWeight: "600",
     lineHeight: "73px",
     textAlign: "center",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '3em'
+    },
   },
   box: {
     border: "1px solid #FFFFFF",
-    minHeight: "140px",
     borderRadius: "5px",
-  }
-})
+  },
+  button: {
+
+  },
+}))
 
 const Brand = () => {
+  return (
+    <img src="/img/landing/logo.png" alt="landing" />
+  );
+}
+
+const ActionsButton = ({ text, icon }) => {
   const classes = useStyles();
   return (
-    <div className={classes.brand}>Grabit</div>
+    <Button
+      variant="contained"
+      color="primary"
+      size="small"
+      className={classes.button}
+      startIcon={icon}
+    >
+      {text}
+    </Button>
   );
 }
 
@@ -62,42 +86,53 @@ export default () => {
   return (
     <div>
     <div className={classes.container}></div>
-      
-        <div className={classes.content}>
-          <Container component="main" maxWidth="lg" >
-            <Grid container justify="space-between" alignItems="flex-end">
-              <Grid container justify="space-between" alignItems="center">
-                <Grid item sm={2}>
-                  <Brand />
-                </Grid>
-                <Grid item sm={2} >
-                  <Brand />
-                </Grid>
+      <div className={classes.content}>
+        <Container component="main" maxWidth="lg" >
+          <Grid container justify="space-between" alignItems="flex-end">
+            <Grid container justify="space-between" alignItems="center" >
+              <Grid item sm={2} className={classes.brand} >
+                <Brand />
               </Grid>
-
-              <Grid container justify="center" alignItems="center">
-                <Grid item sm={10}>
-                  <p className={classes.weDeliverText}>we deliver it to your door within one hour</p>
-                </Grid>
-              </Grid>
-              
-              <Grid container justify="center" alignItems="center" spacing={2}>
-                <Grid item sm={4}>
-                  <SignUpBox >
-                    Driver
-                  </ SignUpBox >
-                </Grid>
-                <Grid item sm={4}>
-                  <SignUpBox >
-                    Customer
-                  </ SignUpBox >
-                </Grid>
+              <Grid item sm={3}>
+                <ActionsButton text="Be a partner" icon={<MotorcycleIcon />} />
+                <ActionsButton text="Sign in" icon={<LockOpenIcon />} />
               </Grid>
             </Grid>
 
-          </Container>
-        </div>
-      
+            <Grid container justify="center" alignItems="center">
+              <Grid item sm={10}>
+                <p className={classes.weDeliverText}>we deliver it to your door within one hour</p>
+              </Grid>
+            </Grid>
+            
+            <Grid container justify="center" alignItems="center" spacing={2}>
+              <Grid item md={3} xs={6}>
+                <SignUpBox >
+                  <Box
+                      display="flex"
+                      alignItems="center"
+                      p={1}
+                      m={1}
+                      css={{ height: 100 }}
+                    >
+                    <Grid container justify="space-between" alignItems="center">
+                        <Grid item xs={12}>
+                          <ShoppingBasketIcon style={{ color: "#fff", width: "35px", height: "35px" }} />
+                        </Grid>
+                        <Grid item xs={8} style={{ color: "#fff" }}>
+                          Request Your Order
+                        </Grid>
+                        <Grid item xs={1}>
+                          <img src="/img/landing/arrow.png" alt="arrow" style={{ color: "#fff", width: "16px", height: "16px" }} />
+                        </Grid>
+                    </Grid>
+                  </Box>
+                </ SignUpBox >
+              </Grid>
+            </Grid>
+          </Grid>
+        </Container>
+      </div>
     </div>
   )
 }

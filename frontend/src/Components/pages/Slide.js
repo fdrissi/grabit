@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     backgroundColor: "rgba(0,0,0,0.66)",
     background: "linear-gradient(180deg, rgba(255,255,255,0) 0.67%, #000000 100%)",
+    backgroundImage: "url('/img/landing/slide.png')",
   },
   content: {
     width: "100%",
@@ -106,7 +107,7 @@ export default () => {
             </Grid>
             
             <Grid container justify="center" alignItems="center" spacing={2}>
-              <Grid item md={3} xs={6}>
+              <Grid item md={4} xs={6}>
                 <SignUpBox >
                   <Box
                       display="flex"

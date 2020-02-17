@@ -5,6 +5,9 @@ const useStyles = makeStyles(theme => ({
   container: {
     backgroundColor: "#F71117",
     width: "100%",
+    backgroundImage: "url('/img/landing/mailLogo.png')",
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: "left center",
   },
   title: {
   	color: "#FFFFFF",

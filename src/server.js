@@ -19,7 +19,7 @@ connectToDatabase();
 
 // Instantiate an Express Application
 const app = express();
-app.use(session({
+const expressSession = session({
   secret: secretKey,
   resave: false,
   rolling: true,
@@ -29,7 +29,8 @@ app.use(session({
     sameSite: true,
     secure: IN_PRODUCTION,
   },
-}));
+});
+app.use(expressSession);
 
 // Require Facebook Strategy, Initialize passport
 require('./config/passport')(passport);
@@ -65,6 +66,7 @@ app.use('*', (req, res, next) => {
 
 // Assign Routes
 app.use('/api/v1/auth/facebook', require('./routes/auth'));
+app.use('/api/v1/users/', require('./routes/users'));
 app.use('/api/v1/order', require('./routes/orders'));
 
 // Handle not valid route
@@ -76,4 +78,6 @@ app.use('*', (req, res) => {
 });
 
 // Open Server on selected Port
-app.listen(port);
+const server = app.listen(port);
+// require socket
+require('./socket')(server, expressSession);

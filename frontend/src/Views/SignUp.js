@@ -32,9 +32,8 @@ export default () => {
       <Grid item style={{ margin: "0 auto" }}>
         <SignUpCard userType={userType}>
           <div className={classes.text}>
-            <p >Sign up as {userType}</p>
+            <p >Continue as {userType}</p>
           </div>
-          
         </ SignUpCard>
       </Grid>
     </Grid>

@@ -1,5 +1,4 @@
 const sio = require('socket.io');
-const mongoose = require('mongoose');
 
 const User = require('./models/User');
 

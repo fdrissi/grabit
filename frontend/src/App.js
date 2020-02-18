@@ -64,7 +64,7 @@ function App() {
 
   useEffect(() => {
     loadUser(stableDispatch);
-    currentPosition(setLastPosition);
+    // currentPosition(setLastPosition);
   }, [stableDispatch])
 
   useEffect(() => {
@@ -88,7 +88,6 @@ function App() {
               flexDirection: "column"
             }}
           >
-          <Navbar />
           <Route component={Routes} />
           <Footer style={{ flex: 1 }} />
         </div>

@@ -45,7 +45,7 @@ const userSchema = new Schema({
   type: {
     type: String,
   },
-}, { autoIndex: false });
+});
 
 userSchema.index({ location: '2dsphere' });
 

@@ -5,12 +5,14 @@ import Landing from "../../Views/Landing";
 import SignUp from "../../Views/SignUp";
 import EditProfile from "../../Views/EditProfile";
 import RequestOrder from "../../Views/RequestOrder";
+import Navbar from "../header/Navbar";
 //import PrivateRoute from "./PrivateRoute";
 
 const Routes = () => {
 
   return (
     <div style={{ flex: 1 }}>
+      <Navbar />
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/signup/customer" component={SignUp} />

@@ -7,6 +7,7 @@ const connectToDatabase = async () => {
     await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     });
     console.log("Db connected"); //eslint-disable-line
   } catch (error) {

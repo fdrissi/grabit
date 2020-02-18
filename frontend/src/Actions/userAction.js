@@ -6,8 +6,9 @@ export const loadUser = async (dispatch) => {
   try {
     // eslint-disable-next-line no-console
   console.log('middleware');
-    const user = await axios.get('/api/v1/users/me');
-    console.log("user")
+    const response = await axios.get('/api/v1/users/me');
+    const { user } = response.data;
+
     dispatch({
       type: LOAD_USER,
       payload: user

@@ -60,6 +60,8 @@ function App() {
     );
   }
 
+  console.log(user)
+
   useEffect(() => {
     loadUser(stableDispatch);
     currentPosition(setLastPosition);

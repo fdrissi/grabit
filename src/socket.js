@@ -1,4 +1,7 @@
 const sio = require('socket.io');
+const mongoose = require('mongoose');
+
+const User = require('./models/User');
 
 
 module.exports = (server, expressSession) => {
@@ -15,26 +18,34 @@ module.exports = (server, expressSession) => {
   });
 
   // authenticate socket connection
-  // io.use((socket, next) => {
-  //   if (socket.request.session.passport && socket.request.session.passport.user) {
-  //     next();
-  //   }
-  //   next(new Error('Authentication error'));
-  // });
+  io.use((socket, next) => {
+    if (socket.request.session.passport && socket.request.session.passport.user) {
+      next();
+    }
+    next(new Error('Authentication error'));
+  });
 
   io.on('connection', (socket) => {
     // save connected user socket id
-    // const { user: userId } = socket.request.session.passport;
-    // socket.userId = userId; // eslint-disable-line no-param-reassign
+    const { user: userId } = socket.request.session.passport;
+    socket.userId = userId; // eslint-disable-line no-param-reassign
 
-    // // manage users with multiple socket ids
-    // if (users[userId] && users[userId].indexOf(socket.id) === -1) {
-    //   users[userId].push(socket.id);
-    // } else users[userId] = [socket.id];
+    // manage users with multiple socket ids
+    if (users[userId] && users[userId].indexOf(socket.id) === -1) {
+      users[userId].push(socket.id);
+    } else users[userId] = [socket.id];
 
     // update driver location
-    socket.on('updateLocation', (data) => {
-      console.log(data);
+    socket.on('updateLocation', async (coords) => {
+      try {
+        const { longitude, latitude } = coords;
+        const filter = { _id: socket.userId };
+        const update = { location: { type: 'Point', coordinates: [longitude, latitude] } };
+
+        await User.findOneAndUpdate(filter, update);
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     // user diconnected

@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
       [theme.breakpoints.down('sm')]: {
         fontSize: "12px",
       },
+      display: "block",
     },
     input: {
       height: "40px",
@@ -64,53 +65,44 @@ const Form = ({ formData, setFormData}) => {
   return (
     <Grid container >
       <Grid item xs={12}>
-        <TextField
-          className={classes.field}
-          id="outlined-multiline-static"
-          label="Describe your Order"
-          name="description"
-          multiline
-          rows="4"
-          variant="outlined"
-          value={description}
-          onChange={handleChange}
-          InputLabelProps={{ className: classes.label, }}
-        /> 
+        <label className={classes.label}>Describe your Order</ label>
+        <textarea name="description" value={description} onChange={handleChange} rows="8" style={{ width: "100%", resize: 'none', border: "1px #dedede solid", borderRadius: "2px", marginBottom: "10%" }} />
       </Grid>  
       <Grid item xs={12}>
-        <ChipInput
+        {/* <ChipInput
           className={classes.field}
           value={orderItems}
           onAdd={(chip) => handleAddChip(chip)}
           onDelete={(chip, index) => handleDeleteChip(chip, index)}
-        />
+        /> */}
+        <label className={classes.label}>Order items list</ label>
+        <div style={{ position: "relative" }}>
+          <img src="/img/request/addButton.png" alt="Add" style={{ position: "absolute", top: "10px", left: "10px" }} />
+          <input id="items" type="text" style={{ height: "35px", width: "100%", border: "1px #dedede solid", borderRadius: "2px", marginBottom: "10%", padding: "0 40px 0 30px" }} />
+          <span style={{ 	color: "#849FB1",	fontFamily: "Montserrat",	fontSize: "14px",	fontWeight: "600", marginLeft: "-40px" }} >
+            Add
+          </span>
+        </div>
+      </Grid>
+      <Grid item xs={12} style={{ marginBottom: "10%" }}>
+        <Grid container justify="space-between">
+          <Grid item xs={5}>
+            <label for="items" className={classes.label}>Date</ label>
+          </ Grid>
+          <Grid item xs={5}>
+            <label for="items" className={classes.label}>Schedule</ label>
+          </ Grid>
+          <Grid item xs={5}>
+            <input name="deliveryDate" value={deliveryDate} type="text" style={{ height: "35px", width: "100%", border: "1px #dedede solid", borderRadius: "2px" }} />
+          </ Grid>
+          <Grid item xs={5}>
+            <input name="asap" value={asap} onChange={handleChange} type="text" style={{ height: "35px", width: "100%", border: "1px #dedede solid", borderRadius: "2px" }} />
+          </ Grid>
+        </ Grid>        
       </Grid>
       <Grid item xs={12}>
-        <input className={classes.field} type="date" name="deliveryDate" value={deliveryDate} onChange={handleChange} />
-      </Grid>  
-      <Grid item xs={12}>
-        <FormControlLabel
-          control={
-            <Checkbox checked={asap} onChange={() => setFormData({ ...formData, asap: !asap })} value="asap" />
-          }
-          className={classes.field}
-          label="ASAP"
-        /> 
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          className={classes.field}
-          id="outlined-multiline-static"
-          label="Cost"
-          name="cost"
-          variant="outlined"
-          value={cost}
-          onChange={handleChange}
-          InputLabelProps={{ className: classes.label, }}
-          InputProps={{
-            className: classes.input,
-        }}
-        /> 
+        <label className={classes.label}>Order Cost</ label>
+        <input name="cost" value={cost} type="text" style={{ height: "35px", width: "100%", border: "1px #dedede solid", borderRadius: "2px" }} />
       </Grid>  
     </Grid>
   );
@@ -127,28 +119,10 @@ const Address = ({ formData, setFormData }) => {
   return (
     <Grid container > 
       <Grid item xs={12}>
-        <TextField
-          className={classes.field}
-          id="outlined-multiline-static"
-          label="Pickup Address"
-          variant="outlined"
-          name="startAddress"
-          value={startAddress}
-          onChange={handleChange}
-          InputLabelProps={{ className: classes.label, }}
-        />   
+        <input name="startAddress" value={startAddress} onChange={handleChange} type="text" placeHolder="Pickup Address" style={{ height: "35px", width: "100%", border: "1px #dedede solid", borderRadius: "2px", margin: "5% 0" }} />
       </Grid> 
       <Grid item xs={12}>
-        <TextField
-          className={classes.field}
-          id="outlined-multiline-static"
-          label="Destination Address"
-          variant="outlined"
-          name="deliveryAddress"
-          value={deliveryAddress}
-          onChange={handleChange}
-          InputLabelProps={{ className: classes.label, }}
-        />
+        <input name="deliveryAddress" value={deliveryAddress} onChange={handleChange} type="text" placeHolder="Destiny Address" style={{ height: "35px", width: "100%", border: "1px #dedede solid", borderRadius: "2px", marginBottom: "5%" }} />
       </Grid> 
       <Grid item xs={12}>
         <img src="/img/request/map.png" alt="map" style={{ width: "100%", maxWidth: "469px" }} />
@@ -176,7 +150,7 @@ export default () => {
         </div>
         
         <Divider />
-        <Grid container alignItems="center" justify="space-around" spacing={1} style={{ padding: "10px" }}>
+        <Grid container alignItems="flex-start" justify="space-around" spacing={1} style={{ padding: "10px" }}>
           <Grid item sm={5} xs={12}>
             <Form formData={formData} setFormData={setFormData} />
           </Grid>

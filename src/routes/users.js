@@ -9,7 +9,7 @@ const { promisify } = require('util');
 const unlinkAsync = promisify(fs.unlink);
 const validator = require('../middleware/validators');
 const isAuthenticated = require('../middleware/authentified');
-const User = require('../models/userModel');
+const User = require('../models/User');
 const { imagesPath } = require('../config/config');
 
 // Configure storage for multer
@@ -52,6 +52,8 @@ const upload = multer({
 // @desc    Get Authenticated user info
 // @access  Private
 router.get('/me', isAuthenticated, (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log('logged');
   const { user } = req;
   res.json({ user });
 });
@@ -128,3 +130,5 @@ router.post('/image',
       return res.status(400).send({ msg: 'Invalid Profile Image' });
     }
   });
+
+module.exports = router;

@@ -6,11 +6,11 @@ const MongoSchema = mongoose.Schema;
 const orderSchema = new MongoSchema({
   customer: {
     type: MongoSchema.Types.ObjectId,
-    ref: 'Customer',
+    ref: 'User',
   },
   deliveryMan: {
     type: MongoSchema.Types.ObjectId,
-    ref: 'Courier',
+    ref: 'User',
   },
   description: {
     type: String,

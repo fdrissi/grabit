@@ -1,8 +1,11 @@
-const { frontUrl } = require('../config/config');
+// const { frontUrl } = require('../config/config');
 
 module.exports = (req, res, next) => {
-  if (req.isAuthenticated) {
-    next();
+  if (req.isAuthenticated()) {
+    // eslint-disable-next-line no-console
+    console.log('next');
+    return next();
   }
-  res.redirect(frontUrl);
+  return res.status(401).json({ msg: 'Access denied' });
+  // res.redirect(frontUrl);
 };

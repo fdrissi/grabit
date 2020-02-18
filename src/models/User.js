@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 
-const courierSchema = new Schema({
+const userSchema = new Schema({
   facebookId: {
     type: String,
     required: true,
@@ -47,7 +47,7 @@ const courierSchema = new Schema({
   },
 }, { autoIndex: false });
 
-courierSchema.index({ location: '2dsphere' });
+userSchema.index({ location: '2dsphere' });
 
-const Courier = mongoose.model('Courier', courierSchema);
-module.exports = Courier;
+const User = mongoose.model('User', userSchema);
+module.exports = User;

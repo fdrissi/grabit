@@ -1,7 +1,6 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
 
-const Customer = require('../models/Customer');
-const Courier = require('../models/Courier');
+const User = require('../models/User');
 const {
   facebookId,
   facebookSecret,
@@ -14,7 +13,7 @@ const facebookAuth = (passport) => {
   });
 
   passport.deserializeUser((id, done) => {
-    Customer.findById(id, (err, user) => {
+    User.findById(id, (err, user) => {
       done(err, user);
     });
   });
@@ -34,29 +33,19 @@ const facebookAuth = (passport) => {
     const { _json: fullName } = profile;
     const { first_name: firstName, last_name: lastName } = fullName;
     try {
-      const user = (userType === 'Customer')
-        ? await Customer.findOne({
-          facebookId: profile.id,
-        })
-        : await Courier.findOne({
-          facebookId: profile.id,
-        });
+      const user = await User.findOne({
+        facebookId: profile.id,
+      });
 
       if (user) {
         // User already registred
         return done(null, user);
       }
-      const newUser = (userType === 'Customer')
-        ? new Customer({
-          facebookId: profile.id,
-          name: `${firstName} ${lastName}`,
-          type: userType,
-        })
-        : new Courier({
-          facebookId: profile.id,
-          name: `${firstName} ${lastName}`,
-          type: userType,
-        });
+      const newUser = new User({
+        facebookId: profile.id,
+        name: `${firstName} ${lastName}`,
+        type: userType,
+      });
 
       await newUser.save();
       delete req.session.userType;

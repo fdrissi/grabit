@@ -131,4 +131,31 @@ router.post('/image',
     }
   });
 
+// @route   GET api/users/near/:long/:lat
+// @desc    Get near drivers to location
+// @access  Private
+router.get('/near/:long/:lat', async (req, res) => {
+  const { long, lat } = req.params;
+  const filter = {
+    location: {
+      $near: {
+        $maxDistance: 1000,
+        $geometry: {
+          type: 'Point',
+          coordinates: [Number(long), Number(lat)],
+        },
+      },
+    },
+  };
+
+  try {
+    const users = await User.find(filter);
+    if (users.length === 0) return res.status(404).json({ msg: 'No driver available' });
+    return res.json({ users });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: 'Server Error' });
+  }
+});
+
 module.exports = router;

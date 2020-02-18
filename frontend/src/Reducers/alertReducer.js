@@ -1,4 +1,4 @@
-import { SET_ALERT, REMOVE_ALERT } from "../actions/actionTypes";
+import { SET_ALERT, REMOVE_ALERT } from "../Actions/actionTypes";
 
 export const alertInitState = {
   alertType: "",

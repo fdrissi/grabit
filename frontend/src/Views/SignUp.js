@@ -25,7 +25,6 @@ export default () => {
   const pathname = window.location.pathname;
   const pathArray = pathname.split('/').filter(arr => arr !== "");
   const userType = pathArray.pop();
-  console.log(userType)
 
   return (
     <Grid container direction="column" alignItems="center" justify="center" className={classes.container}>

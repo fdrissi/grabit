@@ -1,16 +1,23 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { CssBaseline } from "@material-ui/core"
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme, makeStyles } from "@material-ui/core/styles";
 import io from "socket.io-client";
 
-import Navbar from "./Components/header/Navbar"
 import Footer from "./Components/footer/Footer"
 import Routes from "./Components/routing/Routes";
 import { loadUser } from "./Actions/userAction";
 import { useStore } from "./Store/appStore";
 
 const socket = io("http://localhost:5000");
+
+const useStyles = makeStyles({
+  container: {
+    display: "flex",
+    minHeight: "100vh",
+    flexDirection: "column"
+  },
+})
 
 const locationChanged = (lastPosition, currentPosition) => {
   const { coords: currentCoords } = currentPosition;
@@ -33,6 +40,7 @@ const currentPosition = (setPosition) => {
 }
 
 function App() {
+  const classes = useStyles();
   const [lastPosition, setLastPosition] = useState({});
   const [{ user }, dispatch] = useStore();
   const stableDispatch = useCallback(dispatch, []);
@@ -81,13 +89,7 @@ function App() {
     <MuiThemeProvider theme={muiTheme}>
       <Router>
         <CssBaseline />
-        <div
-            style={{
-              display: "flex",
-              minHeight: "100vh",
-              flexDirection: "column"
-            }}
-          >
+        <div className={classes.container}>
           <Route component={Routes} />
           <Footer style={{ flex: 1 }} />
         </div>

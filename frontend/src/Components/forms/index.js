@@ -1,0 +1,9 @@
+export { default as FormTitle } from './Title';
+export { default as Input } from './InputText';
+export { default as TextArea } from './TextArea';
+export { default as ItemsList } from './AddList';
+export { default as ShowItems } from './ShowItems';
+export { default as SubmitButton } from './Button';
+export { default as OrderForm } from './OrderInfoFrom';
+export { default as AddressForm } from './AddressForm';
+export { default as Form } from './OrderForm';

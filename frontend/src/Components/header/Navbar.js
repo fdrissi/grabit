@@ -40,7 +40,6 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
           Grabit
           </Typography>
-          
           <Button color="primary"><AccountCircleIcon /></Button>
         </Toolbar>
       </AppBar>

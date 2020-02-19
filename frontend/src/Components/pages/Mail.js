@@ -65,7 +65,6 @@ export default () => {
               variant="contained"
               color="primary"
               size="small"
-              className={classes.button}
               endIcon={<img src="/img/landing/send.png" alt="send" />}
               className={classes.mailButton}
             >

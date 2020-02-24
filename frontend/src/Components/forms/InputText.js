@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 export default ({ label=null, type, name, value, handleChange, error=false, ...rest }) => {
   const classes = useStyles();
   return (
-    <div className={classes.mb}>
+    <div >
       <label className={classes.label}>{label}</ label>
       <input type={type} name={name} value={value} onChange={handleChange} className={`${classes.field} ${classes.fieldHeight}`} {...rest} style={{ borderColor: error && 'red' }} />
       <label className={classes.errorLabel}>{error}</ label>

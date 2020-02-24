@@ -12,11 +12,11 @@ const useStyles = makeStyles({
   },
 });
 
-export default () => {
+export default ({ title }) => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <h1 className={classes.title}>Request</h1>
+      <h1 className={classes.title}>{title}</h1>
     </div>
   )
 }

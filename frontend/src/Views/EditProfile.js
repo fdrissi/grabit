@@ -1,13 +1,14 @@
 import React from 'react'
 import { Paper, makeStyles, Divider, Grid, Container, TextField } from '@material-ui/core'
+import { FormTitle } from '../Components/forms';
 
 const useStyles = makeStyles(theme => ({
     container: {
-        width: "80%",
-        height: "50vh",
-        position: "absolute",
-        top: "20%",
-        left: "10%"
+        width: "60%",
+        margin: "5% auto"
+    },
+    p: {
+        padding: "10px",
     },
     field: {
         width: "300px",
@@ -18,7 +19,7 @@ export default () => {
     const classes = useStyles();
     return (
         <Paper className={classes.container}>
-            <h1>Edit Profile Info</h1>
+            <FormTitle title="Edit Profile Info" />
             <Divider />
             <Container maxWidth="md">
                 <form autoComplete="off">

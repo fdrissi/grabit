@@ -5,15 +5,15 @@ import { Form, SubmitButton, FormTitle } from '../Components/forms';
 import { useRequestForm } from '../Components/forms/hooks';
 import { validateOrder } from '../Components/forms/validators';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     container: {
-        width: "60%",
-        margin: "5% auto"
+      width: "70%",
+      margin: "2% auto",
     },
     p: {
       padding: "10px",
     },
-}));
+});
 
 // eslint-disable-next-line no-extend-native
 Date.prototype.toDateInputValue = (function() {
@@ -32,7 +32,7 @@ export default () => {
 
     return (
       <Paper className={classes.container}>
-        <FormTitle />
+        <FormTitle title="Request" />
         <Divider />
         <Grid container alignItems="flex-start" justify="space-around" spacing={1} className={classes.p}>
           <Grid container justify="space-between">

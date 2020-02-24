@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { TextArea, Input, ItemsList } from "./";
 
+const useStyles = makeStyles({
+  mb: {
+    marginBottom: "15%",
+  },
+});
+
 export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => {
+  const classes = useStyles();
   const { description, item, orderItems, asap, deliveryDate, cost, errors } = formData;
   useEffect(() => {
     console.log(formData.errors)
   }, [formData])
   return (
     <Grid container >
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.mb}>
         <TextArea 
           label="Describe your Order" 
           name="description" 
@@ -21,7 +29,7 @@ export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => 
           error={errors.description}
         />
       </ Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.mb}>
         <ItemsList 
           label="Order items list" 
           type="text" 
@@ -35,8 +43,8 @@ export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => 
         />
       </ Grid>
        
-      <Grid item xs={12} style={{ marginBottom: "10%" }}>
-        <Grid container justify="space-between">
+      <Grid item xs={12} >
+        <Grid container justify="space-between" className={classes.mb}>
           <Grid item xs={5}>
             <Input 
               label="Date" 
@@ -59,7 +67,7 @@ export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => 
           </ Grid>
         </ Grid>        
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.mb}>
         <Input 
           label="Order Cost" 
           type="text" 

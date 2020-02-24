@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: "2px", 
   },
   mb: {
-    marginBottom: "10%",
+    marginBottom: "15%",
   },
   fieldHeight: {
     height: "35px",
@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
 export default ({ label = null, handleAddItem, handleDeleteItem, orderItems, error=false, ...rest }) => {
   const classes = useStyles();
   return (
-    <div className={classes.mb}>
+    <div >
       <label className={classes.label}>{label}</ label>
       <div style={{ position: "relative" }}>
         <img src="/img/request/addButton.png" alt="Add" className={classes.addImg} />

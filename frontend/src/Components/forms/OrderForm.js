@@ -6,7 +6,7 @@ import { OrderForm, AddressForm } from './';
 export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => {
   return (
     <>
-      <Grid item sm={5} xs={12}>
+      <Grid item sm={5} xs={12} style={{ padding: "2%" }}>
         <OrderForm 
           formData={formData} 
           handleAddItem={handleAddItem} 

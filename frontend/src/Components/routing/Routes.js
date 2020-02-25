@@ -7,6 +7,7 @@ import EditProfile from "../../Views/EditProfile";
 import RequestOrder from "../../Views/RequestOrder";
 import Navbar from "../header/Navbar";
 import AutoCompleteAddress from "../forms/AutoCompleteAddress";
+import { ConfirmOrder } from "../../Views/ConfirmOrder";
 //import PrivateRoute from "./PrivateRoute";
 
 const Routes = () => {
@@ -21,6 +22,7 @@ const Routes = () => {
         <Route exact path="/edit" component={EditProfile} />
         <Route exact path="/order" component={RequestOrder} />
         <Route exact path="/place" component={AutoCompleteAddress} />
+        <Route exact path="/confirm" component={ConfirmOrder} />
         {/* <PrivateRoute auth={auth} exact path="/setting" component={Setting} /> */} 
       </Switch>
     </div>

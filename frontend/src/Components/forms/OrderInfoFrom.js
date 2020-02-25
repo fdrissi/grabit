@@ -56,7 +56,7 @@ export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => 
           <Grid item xs={5}>
             <Input 
               label="Schedule" 
-              type="date" 
+              type="datetime-local" 
               name="deliveryDate" 
               value={deliveryDate} 
               handleChange={handleChange} 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Paper, makeStyles, Divider, Grid } from '@material-ui/core';
 
-import { Form, SubmitButton, FormTitle } from '../Components/forms';
+import { OrderForm, SubmitButton, FormTitle } from '../Components/forms';
 import { useRequestForm } from '../Components/forms/hooks';
 import { validateOrder } from '../Components/forms/validators';
 
@@ -36,7 +36,7 @@ export default () => {
         <Divider />
         <Grid container alignItems="flex-start" justify="space-around" spacing={1} className={classes.p}>
           <Grid container justify="space-between">
-            <Form 
+            <OrderForm 
               formData={formData} 
               handleAddItem={handleAddItem} 
               handleDeleteItem={handleDeleteItem} 

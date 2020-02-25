@@ -4,6 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ShowItems } from './';
 
 const useStyles = makeStyles(theme => ({
+  inputContainer: {
+    position: "relative", 
+    marginBottom: "5%",
+  },
   field: {
     width: "100%",
     border: "1px #dedede solid", 
@@ -56,7 +60,7 @@ export default ({ label = null, handleAddItem, handleDeleteItem, orderItems, err
   return (
     <div >
       <label className={classes.label}>{label}</ label>
-      <div style={{ position: "relative" }}>
+      <div className={classes.inputContainer}>
         <img src="/img/request/addButton.png" alt="Add" className={classes.addImg} />
         <input className={`${classes.field} ${classes.fieldHeight}`} style={{ padding: "0 40px 0 30px" }} {...rest} />
         <span onClick={handleAddItem} className={classes.addSpan} >

@@ -6,4 +6,6 @@ export { default as ShowItems } from './ShowItems';
 export { default as SubmitButton } from './Button';
 export { default as OrderForm } from './OrderInfoFrom';
 export { default as AddressForm } from './AddressForm';
+export { default as AutoCompleteAddress } from './AutoCompleteAddress';
+export { default as Map } from './Map';
 export { default as Form } from './OrderForm';

@@ -8,7 +8,9 @@ export default (submit, validate) => {
     asap: "",
     deliveryDate: new Date().toDateInputValue(),
     startAddress: "",
+    startAddressCoords: {},
     deliveryAddress: "",
+    deliveryAddressCoords: {},
     cost: "",
     errors: {},
   });
@@ -25,8 +27,13 @@ export default (submit, validate) => {
     setFormData({ ...formData, orderItems: orderItems.filter(item => item !== event.target.alt) });
   }
 
-  const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value, errors: {} });
+  const handleChange = (event, name, value) => {
+    if (name && value) {
+      setFormData({ ...formData, [name]: value, errors: {} })
+    } else {
+      setFormData({ ...formData, [event.target.name]: event.target.value, errors: {} });
+    }
+    console.log(formData)
   }
 
   const handleSubmit = (event) => {

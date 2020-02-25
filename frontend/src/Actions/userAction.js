@@ -5,7 +5,6 @@ import { LOAD_USER, LOGIN_FAIL } from "./actionTypes";
 export const loadUser = async (dispatch) => {
   try {
     // eslint-disable-next-line no-console
-  console.log('middleware');
     const response = await axios.get('/api/v1/users/me');
     const { user } = response.data;
 

@@ -3,7 +3,6 @@
 module.exports = (req, res, next) => {
   if (req.isAuthenticated()) {
     // eslint-disable-next-line no-console
-    console.log('next');
     return next();
   }
   return res.status(401).json({ msg: 'Access denied' });

@@ -53,7 +53,6 @@ const upload = multer({
 // @access  Private
 router.get('/me', isAuthenticated, (req, res) => {
   // eslint-disable-next-line no-console
-  console.log('logged');
   const { user } = req;
   res.json({ user });
 });
@@ -115,7 +114,7 @@ router.post('/image',
     try {
       // Check if uploaded image is valid
       const image = await Jimp.read(fullPath);
-      console.log(image) //eslint-disable-line
+      // console.log(image) //eslint-disable-line
       // Add Validate height and width
       // Everything went fine.
       const user = await User.findOneAndUpdate(

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,9 +13,7 @@ const useStyles = makeStyles({
 export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => {
   const classes = useStyles();
   const { description, item, orderItems, asap, deliveryDate, cost, errors } = formData;
-  useEffect(() => {
-    console.log(formData.errors)
-  }, [formData])
+
   return (
     <Grid container >
       <Grid item xs={12} className={classes.mb}>

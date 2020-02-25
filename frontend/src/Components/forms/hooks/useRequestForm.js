@@ -33,7 +33,6 @@ export default (submit, validate) => {
     } else {
       setFormData({ ...formData, [event.target.name]: event.target.value, errors: {} });
     }
-    console.log(formData)
   }
 
   const handleSubmit = (event) => {

@@ -27,7 +27,7 @@ export default () => {
     const { formData, handleAddItem, handleDeleteItem, handleChange, handleSubmit } = useRequestForm(submit, validateOrder);
 
     function submit() {
-      console.log(formData);
+      // console.log(formData);
     }
 
     return (

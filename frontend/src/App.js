@@ -29,7 +29,6 @@ const locationChanged = (lastPosition, currentPosition) => {
 
 // Get first time position
 const currentPosition = (setPosition) => {
-  console.log("current position");
   navigator.geolocation.getCurrentPosition(
     (position) => {
       setPosition(position);
@@ -67,8 +66,6 @@ function App() {
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
   }
-
-  console.log(user)
 
   useEffect(() => {
     loadUser(stableDispatch);

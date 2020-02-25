@@ -1,12 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-
-
-
-// const moroccoLocation = {
-//   lat: 31.794525,
-//   lng: -7.0849336,
-// }
 
 const currentUserPosition = (createMap, mapRef) => {
   navigator.geolocation.getCurrentPosition(
@@ -26,7 +18,8 @@ const currentUserPosition = (createMap, mapRef) => {
 export default ({ pickupLocation, destinationLocation }) => {
   const googleMapRef = React.createRef();
   const googleMap = useRef(null);
-  const marker = useRef(null);
+  const startMarker = useRef(null);
+  const endMarker = useRef(null);
 
   const createGoogleMap = (userLocation) =>
     new window.google.maps.Map(googleMapRef.current, {
@@ -40,7 +33,7 @@ export default ({ pickupLocation, destinationLocation }) => {
   const createMarker = (location, icon) => {
     const iconPath = `/img/request/${icon}`;
 
-    new window.google.maps.Marker({
+    const mark = new window.google.maps.Marker({
       setVisible: false,
       position: {
         lat: location.lat,
@@ -50,6 +43,7 @@ export default ({ pickupLocation, destinationLocation }) => {
       draggable: true,
       icon: iconPath
     });
+    return mark;
   }
 
   useEffect(() => {
@@ -60,10 +54,17 @@ export default ({ pickupLocation, destinationLocation }) => {
         currentUserPosition(createGoogleMap, googleMap);
     })
 
-    if (pickupLocation.lng && pickupLocation.lat)
-      marker.current = createMarker(pickupLocation, "start.png");
-    if(destinationLocation.lng && destinationLocation.lat)
-      marker.current = createMarker(destinationLocation, "finish.png");
+    if (pickupLocation.lng && pickupLocation.lat) {
+      if (startMarker.current)
+        startMarker.current.setMap(null);
+      startMarker.current = createMarker(pickupLocation, "start.png");
+    }
+    if(destinationLocation.lng && destinationLocation.lat) {
+      if (endMarker.current)
+        endMarker.current.setMap(null);
+      endMarker.current = createMarker(destinationLocation, "finish.png");
+    }
+      
   })
 
   return (

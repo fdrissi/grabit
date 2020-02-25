@@ -1,4 +1,7 @@
 import React, { useRef, useEffect } from 'react';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+
+
 
 // const moroccoLocation = {
 //   lat: 31.794525,
@@ -27,14 +30,16 @@ export default ({ pickupLocation, destinationLocation }) => {
 
   const createGoogleMap = (userLocation) =>
     new window.google.maps.Map(googleMapRef.current, {
-      zoom: 6,
+      zoom: 12,
       center: {
         lat: userLocation.lat,
         lng: userLocation.lng,
       }
     });
 
-  const createMarker = (location) => 
+  const createMarker = (location, icon) => {
+    const iconPath = `/img/request/${icon}`;
+
     new window.google.maps.Marker({
       setVisible: false,
       position: {
@@ -43,8 +48,10 @@ export default ({ pickupLocation, destinationLocation }) => {
       },
       map: googleMap.current,
       draggable: true,
+      icon: iconPath
     });
-  
+  }
+
   useEffect(() => {
     const googleMapScript = document.getElementById('google-maps');
 
@@ -54,9 +61,9 @@ export default ({ pickupLocation, destinationLocation }) => {
     })
 
     if (pickupLocation.lng && pickupLocation.lat)
-      marker.current = createMarker(pickupLocation);
+      marker.current = createMarker(pickupLocation, "start.png");
     if(destinationLocation.lng && destinationLocation.lat)
-      marker.current = createMarker(destinationLocation);
+      marker.current = createMarker(destinationLocation, "finish.png");
   })
 
   return (

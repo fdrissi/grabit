@@ -1,9 +1,12 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom';
 import { Paper, makeStyles, Divider, Grid } from '@material-ui/core';
 
 import { OrderForm, SubmitButton, FormTitle } from '../Components/forms';
 import { useRequestForm } from '../Components/forms/hooks';
 import { validateOrder } from '../Components/forms/validators';
+import { useStore } from '../Store/appStore';
+import { SET_ORDER } from '../Actions/actionTypes';
 
 const useStyles = makeStyles({
     container: {
@@ -24,12 +27,20 @@ Date.prototype.toDateInputValue = (function() {
 
 export default () => {
     const classes = useStyles();
+    const [{ order }, dispatch] = useStore();
     const { formData, handleAddItem, handleDeleteItem, handleChange, handleSubmit } = useRequestForm(submit, validateOrder);
 
     function submit() {
       // console.log(formData);
+  
+      dispatch({
+        type: SET_ORDER,
+        payload: formData
+      })
+      
     }
 
+    if (order.set) return <Redirect to="/confirm" />
     return (
       <Paper className={classes.container}>
         <FormTitle title="Request" />

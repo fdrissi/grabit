@@ -19,6 +19,7 @@ const userSchema = new Schema({
   },
   available: {
     type: Boolean,
+    default: false,
   },
   location: {
     type: {
@@ -27,16 +28,22 @@ const userSchema = new Schema({
     coordinates: [],
   },
   reviews: {
-    customer: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    rating: {
-      type: Number,
-    },
-    description: {
-      type: String,
-    },
+    // customer: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'User',
+    // },
+    // rating: {
+    //   type: Number,
+    // },
+    // description: {
+    //   type: String,
+    // },
+    type: Number,
+    default: 0,
+  },
+  hasOrder: {
+    type: Boolean,
+    default: false,
   },
   active: {
     type: Boolean,

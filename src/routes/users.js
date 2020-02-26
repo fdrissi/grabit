@@ -145,11 +145,14 @@ router.get('/near/:long/:lat', async (req, res) => {
         },
       },
     },
+    available: true,
   };
 
   try {
-    const users = await User.find(filter);
+    const users = await User.find(filter).sort({ reviews: -1, hasOrder: -1 });
+
     if (users.length === 0) return res.status(404).json({ msg: 'No driver available' });
+
     return res.json({ users });
   } catch (error) {
     console.log(error);

@@ -1,10 +1,16 @@
 import React, { useRef, useEffect } from 'react';
 
-// constant value to estimate time to finish order
-const DRIVER_TIME_TO_ARRIVE = 3; //;min
-const DRIVER_MAX_TIME_TO_COLLECT = 15; //min
+// constant values to estimate time to finish order
+const DRIVER_TIME_TO_PICKUP_ADDRESS = 3; //min
+const DRIVER_MAX_TIME_WAITING_ORDER = 15; //min
 const DRIVER_MIN_SPEED = 20; //km
 const ONE_HOUR = 60; //min
+
+const getEstimatedTime = (distance) => {
+  const pickupToDeliveryTime = ((distance * ONE_HOUR) / DRIVER_MIN_SPEED); // time between pickup address and delivery address
+  const estimatedTime = pickupToDeliveryTime + DRIVER_TIME_TO_PICKUP_ADDRESS + DRIVER_MAX_TIME_WAITING_ORDER;
+  return estimatedTime;
+}
 
 const currentUserPosition = (createMap, mapRef) => {
   navigator.geolocation.getCurrentPosition(
@@ -19,12 +25,6 @@ const currentUserPosition = (createMap, mapRef) => {
     (error) => console.log(error),
     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
   );
-}
-
-const getEstimatedTime = (distance) => {
-  console.log(distance, ((distance * ONE_HOUR) / DRIVER_MIN_SPEED))
-  const estimatedTime = ((distance * ONE_HOUR) / DRIVER_MIN_SPEED) + DRIVER_TIME_TO_ARRIVE + DRIVER_MAX_TIME_TO_COLLECT;
-  return estimatedTime;
 }
 
 export default ({ pickupLocation, destinationLocation, handleChange }) => {
@@ -91,16 +91,15 @@ export default ({ pickupLocation, destinationLocation, handleChange }) => {
 
   useEffect(() => {
     const distance = Math.ceil(getDistance(pickupLocation, destinationLocation)) / 1000; //to km
-    console.log(distance)
     const estimatedTime = Math.ceil(getEstimatedTime(distance));
+    
     const data = {
       distance,
       estimatedTime
     };
+
     if (distance && estimatedTime)
       handleChange(false, 'distance', data);
-    // if (estimatedTime)
-    //   handleChange(false, 'estimatedTime', estimatedTime);
   }, [pickupLocation, destinationLocation])
 
   return (

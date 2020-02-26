@@ -1,57 +1,73 @@
-import React from 'react'
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles"
 
-import { Fade } from "../Components/pages/";
-import { FormTitle } from '../Components/forms/';
+import { Fade, Label, Info, List, Billing } from "../Components/pages/";
+import { FormTitle, SubmitButton } from '../Components/forms/';
+import { useStore } from '../Store/appStore';
 
 const useStyles = makeStyles({
-  label: {
-    color: "#849FB1",
-    fontFamily: "Montserrat",
-    fontSize: "14px",
-    fontWeight: "500",
-    display: "block",
+  case: {
+    marginBottom: "5%",
   },
-  info: {
-    color: "#333C45",
-    fontFamily: "Montserrat",
-    fontSize: "16px",
-    fontWeight: "500",
-  }
 })
 
-const Label = ({text}) => {
-  const classes = useStyles();
-  return (
-    <div className={classes.label}>
-      {text}
-    </div>
-  );
-}
-
-const Info = ({text}) => {
-  const classes = useStyles();
-  return (
-    <div className={classes.info}>
-      {text}
-    </div>
-  );
-}
-
 export const ConfirmOrder = () => {
+  const classes = useStyles();
+  const [{ order }] = useStore();
+
+  const { description, orderItems, deliveryDate, startAddress, deliveryAddress, estimatedTime, cost } = order.details;
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+  }
+
+  if (!order.set) return <Redirect to="/order" />
   return (
     <Fade show >
-      <Grid container >
+      <Grid container style={{ padding: "10%" }}>
         <Grid item xs={12}>
-          <FormTitle title="Order Confirmation" />
+          <FormTitle title="Order Details" />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.case} >
           <Label text="Description" />
+          <Info text={description} />
         </Grid>
-        <Grid item xs={12}>
-          <Info text="lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor
-          lorem ipsum dolorlorem ipsum dolor" />
+        <Grid item xs={12} className={classes.case}>
+          <Label text="Items" />
+          <List items={orderItems} />
+        </Grid>
+        <Grid item xs={12} className={classes.case}>
+          <Label text="Date" />
+          <Info text={deliveryDate} style={{ fontWeight: "900" }} />
+        </Grid>
+        <Grid item xs={12} className={classes.case}>
+          <Label text="Pickup Address" />
+          <Info text={startAddress} />
+        </Grid>
+        <Grid item xs={12} className={classes.case}>
+          <Label text="Delivery Address" />
+          <Info text={deliveryAddress} />
+        </Grid>
+        <Grid item xs={12} className={classes.case}>
+          <Label text="Estimated Delivery time" />
+          <Info text={`In ${estimatedTime} minutes`} style={{ fontWeight: "900" }} />
+        </Grid>
+        <Grid item xs={12} className={classes.case}>
+          <Label text="Billing" />
+          <Billing cost={cost} />
+        </Grid>
+        <Grid item xs={12} className={classes.case}>
+          <Grid container justify="space-around" >
+            <Grid item xs={5}>
+              <SubmitButton text="Confirm" variant="outlined" onClick={handleSubmit} />
+            </Grid>
+            <Grid item xs={5}>
+              <SubmitButton text="Cancel" variant="outlined" style={{ backgroundColor: "#849FB1" }} />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Fade>

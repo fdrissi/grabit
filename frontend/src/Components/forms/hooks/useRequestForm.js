@@ -11,7 +11,6 @@ export default (submit, validate) => {
     startAddressCoords: {},
     deliveryAddress: "",
     deliveryAddressCoords: {},
-    distance: null,
     estimatedTime: null,
     cost: "",
     errors: {},
@@ -29,11 +28,7 @@ export default (submit, validate) => {
     setFormData({ ...formData, orderItems: orderItems.filter(item => item !== event.target.alt) });
   }
 
-  const handleChange = (event, name, value) => {
-    if (name === 'distance') {
-      // const { distance, estimatedTime } = value;
-      setFormData({ ...formData, ...value, errors: {} })
-    } else if (name && value) {
+  const handleChange = (event, name, value) => {if (name && value) {
       setFormData({ ...formData, [name]: value, errors: {} })
     } else {
       setFormData({ ...formData, [event.target.name]: event.target.value, errors: {} });
@@ -43,10 +38,11 @@ export default (submit, validate) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const validationErrors = validate(formData);
-    setFormData({ ...formData, errors: validationErrors });
+    // const validationErrors = validate(formData);
+    // setFormData({ ...formData, errors: validationErrors });
 
-    if (validationErrors.isEmpty) submit();
+    // if (validationErrors.isEmpty) submit();
+    submit();
   }
 
   return {

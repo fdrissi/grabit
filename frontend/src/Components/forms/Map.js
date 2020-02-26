@@ -6,12 +6,6 @@ const DRIVER_MAX_TIME_WAITING_ORDER = 15; //min
 const DRIVER_MIN_SPEED = 20; //km
 const ONE_HOUR = 60; //min
 
-const getEstimatedTime = (distance) => {
-  const pickupToDeliveryTime = ((distance * ONE_HOUR) / DRIVER_MIN_SPEED); // time between pickup address and delivery address
-  const estimatedTime = pickupToDeliveryTime + DRIVER_TIME_TO_PICKUP_ADDRESS + DRIVER_MAX_TIME_WAITING_ORDER;
-  return estimatedTime;
-}
-
 const currentUserPosition = (createMap, mapRef) => {
   navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -58,15 +52,29 @@ export default ({ pickupLocation, destinationLocation, handleChange }) => {
     return mark;
   }
 
-  const getDistance = (a, b) => {
-    let distance = false;
+  const getDistance = (a, b, cb) => {
     if ((a.lat && a.lng) && (b.lat && b.lng)) {
-      const start = new window.google.maps.LatLng({lat: a.lat, lng: a.lng});
-      const finish = new window.google.maps.LatLng({lat: b.lat, lng: b.lng});
-      distance = window.google.maps.geometry.spherical.computeDistanceBetween(start, finish); 
+
+      const request = {
+        origin: a,
+        destination: b,
+        travelMode: "DRIVING"
+      };
+
+      const directionsService = new window.google.maps.DirectionsService();
+      directionsService.route(request, function(result, status) {
+        if (status === "OK") {
+          const distance = result.routes[0].legs[0].distance.value / 1000; // to km
+          cb(distance);
+        }
+      });
     }
-      
-    return distance;
+  }
+
+  const getEstimatedTime = (distance) => {
+    const pickupToDeliveryTime = ((distance * ONE_HOUR) / DRIVER_MIN_SPEED); // time between pickup address and delivery address
+    const estimatedTime = pickupToDeliveryTime + DRIVER_TIME_TO_PICKUP_ADDRESS + DRIVER_MAX_TIME_WAITING_ORDER;
+    handleChange(false, 'estimatedTime', estimatedTime);
   }
 
   useEffect(() => {
@@ -90,21 +98,12 @@ export default ({ pickupLocation, destinationLocation, handleChange }) => {
   })
 
   useEffect(() => {
-    const distance = Math.ceil(getDistance(pickupLocation, destinationLocation)) / 1000; //to km
-    const estimatedTime = Math.ceil(getEstimatedTime(distance));
-    
-    const data = {
-      distance,
-      estimatedTime
-    };
-
-    if (distance && estimatedTime)
-      handleChange(false, 'distance', data);
+    getDistance(pickupLocation, destinationLocation, getEstimatedTime);
   }, [pickupLocation, destinationLocation])
 
   return (
     <div>
-      <div id="google-map" ref={googleMapRef} style={{ width: "500px", height: "400px" }} />
+      <div id="google-map" ref={googleMapRef} style={{ width: "auto", height: "400px" }} />
     </div>
   )
 }

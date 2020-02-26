@@ -1,5 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 
+// constant value to estimate time to finish order
+const DRIVER_TIME_TO_ARRIVE = 3; //;min
+const DRIVER_MAX_TIME_TO_COLLECT = 15; //min
+const DRIVER_MIN_SPEED = 20; //km
+const ONE_HOUR = 60; //min
+
 const currentUserPosition = (createMap, mapRef) => {
   navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -15,7 +21,13 @@ const currentUserPosition = (createMap, mapRef) => {
   );
 }
 
-export default ({ pickupLocation, destinationLocation }) => {
+const getEstimatedTime = (distance) => {
+  console.log(distance, ((distance * ONE_HOUR) / DRIVER_MIN_SPEED))
+  const estimatedTime = ((distance * ONE_HOUR) / DRIVER_MIN_SPEED) + DRIVER_TIME_TO_ARRIVE + DRIVER_MAX_TIME_TO_COLLECT;
+  return estimatedTime;
+}
+
+export default ({ pickupLocation, destinationLocation, handleChange }) => {
   const googleMapRef = React.createRef();
   const googleMap = useRef(null);
   const startMarker = useRef(null);
@@ -46,6 +58,17 @@ export default ({ pickupLocation, destinationLocation }) => {
     return mark;
   }
 
+  const getDistance = (a, b) => {
+    let distance = false;
+    if ((a.lat && a.lng) && (b.lat && b.lng)) {
+      const start = new window.google.maps.LatLng({lat: a.lat, lng: a.lng});
+      const finish = new window.google.maps.LatLng({lat: b.lat, lng: b.lng});
+      distance = window.google.maps.geometry.spherical.computeDistanceBetween(start, finish); 
+    }
+      
+    return distance;
+  }
+
   useEffect(() => {
     const googleMapScript = document.getElementById('google-maps');
 
@@ -64,13 +87,25 @@ export default ({ pickupLocation, destinationLocation }) => {
         endMarker.current.setMap(null);
       endMarker.current = createMarker(destinationLocation, "finish.png");
     }
-      
   })
+
+  useEffect(() => {
+    const distance = Math.ceil(getDistance(pickupLocation, destinationLocation)) / 1000; //to km
+    console.log(distance)
+    const estimatedTime = Math.ceil(getEstimatedTime(distance));
+    const data = {
+      distance,
+      estimatedTime
+    };
+    if (distance && estimatedTime)
+      handleChange(false, 'distance', data);
+    // if (estimatedTime)
+    //   handleChange(false, 'estimatedTime', estimatedTime);
+  }, [pickupLocation, destinationLocation])
 
   return (
     <div>
-      <div id="google-map" ref={googleMapRef} style={{ width: "100%", height: "400px" }} />
+      <div id="google-map" ref={googleMapRef} style={{ width: "500px", height: "400px" }} />
     </div>
-    
   )
 }

@@ -5,7 +5,7 @@ import { Input } from "./index";
 
 const GOOGLE_API_KEY = 'AIzaSyAKq30EizjABPHYvcIRWtlQ08yWtQFBNTg';
 const GOOGLE_API_URL = 
-  `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places`;
+  `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places,geometry`;
 
 function loadScript(src, position, id) {
   if (!position) {

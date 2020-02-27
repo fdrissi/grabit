@@ -28,7 +28,8 @@ export default (submit, validate) => {
     setFormData({ ...formData, orderItems: orderItems.filter(item => item !== event.target.alt) });
   }
 
-  const handleChange = (event, name, value) => {if (name && value) {
+  const handleChange = (event, name, value) => {
+    if (name && value) {
       setFormData({ ...formData, [name]: value, errors: {} })
     } else {
       setFormData({ ...formData, [event.target.name]: event.target.value, errors: {} });

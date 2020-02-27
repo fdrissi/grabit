@@ -1,6 +1,7 @@
 export { default as FormTitle } from './Title';
 export { default as Input } from './InputText';
 export { default as TextArea } from './TextArea';
+export { default as CheckBox } from './CheckBox';
 export { default as ItemsList } from './AddList';
 export { default as ShowItems } from './ShowItems';
 export { default as SubmitButton } from './Button';

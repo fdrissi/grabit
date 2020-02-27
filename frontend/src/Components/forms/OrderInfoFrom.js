@@ -2,17 +2,25 @@ import React from 'react'
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { TextArea, Input, ItemsList } from "./";
+import { TextArea, Input, ItemsList, CheckBox } from "./";
 
 const useStyles = makeStyles({
   mb: {
-    marginBottom: "15%",
+    marginBottom: "10%",
+  },
+  label: {
+    color: "#849FB1",
+    fontFamily: "Montserrat",
+    fontSize: "10px",
+    fontWeight: 500,
+    display: "block",
+    marginLeft: "7%"
   },
 });
 
 export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => {
   const classes = useStyles();
-  const { description, item, orderItems, asap, deliveryDate, cost, errors } = formData;
+  const { description, item, orderItems, asap, deliveryDate, cost, share, errors } = formData;
 
   return (
     <Grid container >
@@ -65,6 +73,15 @@ export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => 
           </ Grid>
         </ Grid>        
       </Grid>
+      <Grid item xs={12} className={classes.mb}>
+        <CheckBox 
+          label="Accept share courier with another customer" 
+          name="share" 
+          check={share} 
+          handleChange={handleChange}
+        />
+        <label className={classes.label}>Shared courier cost 7.5MAD instead of 10MAD, tell the user some details about in which case courier shared.</label>
+      </ Grid>
       <Grid item xs={12} className={classes.mb}>
         <Input 
           label="Order Cost" 

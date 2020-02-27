@@ -12,6 +12,7 @@ export default (submit, validate) => {
     deliveryAddress: "",
     deliveryAddressCoords: {},
     estimatedTime: null,
+    share: false,
     cost: "",
     errors: {},
   });
@@ -29,7 +30,7 @@ export default (submit, validate) => {
   }
 
   const handleChange = (event, name, value) => {
-    if (name && value) {
+    if (name) {
       setFormData({ ...formData, [name]: value, errors: {} })
     } else {
       setFormData({ ...formData, [event.target.name]: event.target.value, errors: {} });

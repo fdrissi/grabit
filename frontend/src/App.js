@@ -2,14 +2,15 @@ import React, { useState, useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { CssBaseline } from "@material-ui/core"
 import { MuiThemeProvider, createMuiTheme, makeStyles } from "@material-ui/core/styles";
-import io from "socket.io-client";
 
 import Footer from "./Components/footer/Footer"
 import Routes from "./Components/routing/Routes";
 import { loadUser } from "./Actions/userAction";
-import { useStore } from "./Store/appStore";
+import { useStore, useSocketStore } from "./Store/appStore";
+import { Modal } from "./Components/pages";
+import { NewOrderNotification } from "./Views/Notification";
 
-const socket = io("http://localhost:5000");
+
 
 const useStyles = makeStyles({
   container: {
@@ -41,6 +42,9 @@ const currentPosition = (setPosition) => {
 function App() {
   const classes = useStyles();
   const [lastPosition, setLastPosition] = useState({});
+  const [open, setOpen] = useState(false);
+  const [order, setOrder] = useState(false);
+  const socket = useSocketStore();
   const [{ user }, dispatch] = useStore();
   const stableDispatch = useCallback(dispatch, []);
 
@@ -54,8 +58,7 @@ function App() {
   const muiTheme = createMuiTheme(theme);
 
   let watch = null;
-  // if (user.isAuthenticated && user.info.type === 'Driver') {
-  if (lastPosition.coords) {
+  if (user.isAuthenticated && user.info.type === 'Driver' && lastPosition.coords) {
     watch = navigator.geolocation.watchPosition(
       (currentPosition) => {
         if (locationChanged(lastPosition, currentPosition)) {
@@ -69,7 +72,7 @@ function App() {
 
   useEffect(() => {
     loadUser(stableDispatch);
-    // currentPosition(setLastPosition);
+    currentPosition(setLastPosition);
   }, [stableDispatch])
 
   useEffect(() => {
@@ -82,9 +85,20 @@ function App() {
     }
   }, [lastPosition, watch])
 
+  socket.on('newOrder', (order) => {
+    console.log("new order")
+    setOpen(true);
+    setOrder(order);
+  });
+
   return (
     <MuiThemeProvider theme={muiTheme}>
       <Router>
+        {
+          order && (
+            <NewOrderNotification order={order} open={open} setOpen={setOpen} />
+          )
+        }
         <CssBaseline />
         <div className={classes.container}>
           <Route component={Routes} />

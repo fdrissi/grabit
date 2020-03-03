@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles"
@@ -6,6 +6,8 @@ import { makeStyles } from "@material-ui/core/styles"
 import { Fade, Label, Info, List, Billing } from "../Components/pages/";
 import { FormTitle, SubmitButton } from '../Components/forms/';
 import { useStore } from '../Store/appStore';
+import { CONFIRM_ORDER } from '../Actions/actionTypes';
+import { requestOrder } from '../Actions/orderAction';
 
 const useStyles = makeStyles({
   case: {
@@ -15,16 +17,24 @@ const useStyles = makeStyles({
 
 export const ConfirmOrder = () => {
   const classes = useStyles();
-  const [{ order }] = useStore();
+  const [{ order }, dispatch] = useStore();
+
+useEffect(() => {
+  console.log(order)
+}, [order])
 
   const { description, orderItems, deliveryDate, startAddress, deliveryAddress, estimatedTime, cost } = order.details;
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+    requestOrder(order.details, dispatch);
+    // dispatch({
+    //   type: CONFIRM_ORDER,
+    // })
   }
 
   if (!order.set) return <Redirect to="/order" />
+  // if (order.orderConfirmed) return <Redirect to="/order" />
   return (
     <Fade show >
       <Grid container style={{ padding: "10%" }}>

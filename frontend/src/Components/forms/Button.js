@@ -6,7 +6,10 @@ const useStyles = makeStyles({
   requestButton: {
     width: "100%", 
     backgroundColor: "#F71117", 
-    color: "#fff"
+    color: "#fff",
+    '&:hover': {
+      background: "#f00",
+   },
   },
 });
 

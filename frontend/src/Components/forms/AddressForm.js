@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -23,6 +23,10 @@ export default ({ formData, handleChange }) => {
 
   const { startAddress, startAddressCoords, deliveryAddress, deliveryAddressCoords, errors } = formData;
 
+  useEffect(() => {
+    console.log(formData.startAddressCoords)
+  }, [formData])
+
   return (
     <Grid container className={classes.mt} > 
       <Grid item xs={12} className={classes.mb}>
@@ -46,7 +50,11 @@ export default ({ formData, handleChange }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Map className={classes.map} pickupLocation={startAddressCoords} destinationLocation={deliveryAddressCoords} />
+        <Map 
+          className={classes.map} 
+          pickupLocation={startAddressCoords} 
+          destinationLocation={deliveryAddressCoords} 
+          handleChange={handleChange} />
       </Grid> 
     </Grid>
   );

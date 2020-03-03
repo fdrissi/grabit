@@ -11,13 +11,13 @@ const useStyles = makeStyles({
   },
 })
 
-export default ({ name, check, handleChange, label }) => {
+export default ({ name, value, handleChange, label }) => {
   const classes = useStyles();
   return (
     <>
       <FormControlLabel
         control={
-          <Checkbox name={name} checked={check} onClick={() => handleChange(false, 'share', !check)} value={check} />
+          <Checkbox name={name} checked={!!value} onClick={() => handleChange(false, name, !value)}  />
         }
         label={label}
         classes= {{ label: classes.label }}

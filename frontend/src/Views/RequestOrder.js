@@ -40,7 +40,7 @@ export default () => {
       
     }
 
-    if (order.set) return <Redirect to="/confirm" />
+    if (order.set) return <Redirect to="/order/confirm" />
     return (
       <Paper className={classes.container}>
         <FormTitle title="Request" />

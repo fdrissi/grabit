@@ -52,12 +52,12 @@ export default ({ pickupLocation, destinationLocation, handleChange }) => {
     return mark;
   }
 
-  const getDistance = (a, b, cb) => {
-    if ((a.lat && a.lng) && (b.lat && b.lng)) {
+  const getDistance = (stratPoint, finishPoint, setEstimatedTime) => {
+    if ((stratPoint.lat && stratPoint.lng) && (finishPoint.lat && finishPoint.lng)) {
 
       const request = {
-        origin: a,
-        destination: b,
+        origin: stratPoint,
+        destination: finishPoint,
         travelMode: "DRIVING"
       };
 
@@ -65,7 +65,7 @@ export default ({ pickupLocation, destinationLocation, handleChange }) => {
       directionsService.route(request, function(result, status) {
         if (status === "OK") {
           const distance = result.routes[0].legs[0].distance.value / 1000; // to km
-          cb(distance);
+          setEstimatedTime(distance);
         }
       });
     }
@@ -78,12 +78,8 @@ export default ({ pickupLocation, destinationLocation, handleChange }) => {
   }
 
   useEffect(() => {
-    const googleMapScript = document.getElementById('google-maps');
-
-    googleMapScript.addEventListener('load', () => {
-      if (googleMapRef.current)
-        currentUserPosition(createGoogleMap, googleMap);
-    })
+    if (googleMapRef.current)
+      currentUserPosition(createGoogleMap, googleMap);
 
     if (pickupLocation.lng && pickupLocation.lat) {
       if (startMarker.current)
@@ -95,7 +91,7 @@ export default ({ pickupLocation, destinationLocation, handleChange }) => {
         endMarker.current.setMap(null);
       endMarker.current = createMarker(destinationLocation, "finish.png");
     }
-  })
+  }, [])
 
   useEffect(() => {
     getDistance(pickupLocation, destinationLocation, getEstimatedTime);

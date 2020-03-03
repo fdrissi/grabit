@@ -7,35 +7,34 @@ const GOOGLE_API_KEY = 'AIzaSyAKq30EizjABPHYvcIRWtlQ08yWtQFBNTg';
 const GOOGLE_API_URL = 
   `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places,geometry`;
 
-function loadScript(src, position, id) {
-  if (!position) {
-    return;
-  }
 
-  const script = document.createElement("script");
-  script.setAttribute("async", "");
-  script.setAttribute("id", id);
-  script.src = src;
-  position.appendChild(script);
-}
+// function loadScript(src, position, id) {
+//   if (!position) {
+//     return;
+//   }
 
-const autocompleteService = { current: null };
+//   const script = document.createElement("script");
+//   script.setAttribute("async", "");
+//   script.setAttribute("id", id);
+//   script.src = src;
+//   position.appendChild(script);
+// }
 
 export default function AutoCompleteAddress({ addressValue, handleChange, id, ...rest }) {
   const [options, setOptions] = useState([]);
-  const loaded = useRef(false);
-  //const autocompleteService = useRef(null);
+  // const loaded = useRef(false);
+  const autocompleteService = useRef(null);
 
-  if (typeof window !== "undefined" && !loaded.current) {
-    if (!document.querySelector("#google-maps")) {
-      loadScript(
-        GOOGLE_API_URL,
-        document.querySelector("head"),
-        "google-maps"
-      );
-    }
-    loaded.current = true;
-  }
+  // if (typeof window !== "undefined" && !loaded.current) {
+  //   if (!document.querySelector("#google-maps")) {
+  //     loadScript(
+  //       GOOGLE_API_URL,
+  //       document.querySelector("head"),
+  //       "google-maps"
+  //     );
+  //   }
+  //   loaded.current = true;
+  // }
 
   const handleChangeSuggest = (event) => {
     handleChange(event);
@@ -76,23 +75,23 @@ export default function AutoCompleteAddress({ addressValue, handleChange, id, ..
   );
 
   useEffect(() => {
-    const script = document.getElementById('google-maps');
+    // const script = document.getElementById('google-maps');
 
-    script.addEventListener('load', () => {
+    // script.addEventListener('load', () => {
 
-      if (!autocompleteService.current && window.google) {
-        autocompleteService.current = new window.google.maps.places.AutocompleteService();
-      }
-      if (!autocompleteService.current) {
-        return undefined;
-      }
-  
-      if (addressValue === "") {
-        setOptions([]);
-        return undefined;
-      }
+    if (!autocompleteService.current && window.google) {
+      autocompleteService.current = new window.google.maps.places.AutocompleteService();
+    }
+    if (!autocompleteService.current) {
+      return undefined;
+    }
 
-    })
+    if (addressValue === "") {
+      setOptions([]);
+      return undefined;
+    }
+
+    // })
   });
 
   useEffect(() => {

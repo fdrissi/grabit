@@ -27,12 +27,12 @@ export default function SimplePaper({ children, userType }) {
       <Paper elevation={0} style={{  width: "500px", height: "200px", padding: "50px 95px" }} >
         {children}
         <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        className={classes.button}
-        startIcon={<img src="/img/facebook.png" alt="facebook" style={{ width: "38px", height: "38px" }} />}
-        href={`http://localhost:5000/api/v1/auth/facebook/login/${userType}`}
+          variant="contained"
+          color="primary"
+          size="large"
+          className={classes.button}
+          startIcon={<img src="/img/facebook.png" alt="facebook" style={{ width: "38px", height: "38px" }} />}
+          href={`http://localhost:5000/api/v1/auth/facebook/login/${userType}`}
         >
           Continue with Facebook
         </Button>

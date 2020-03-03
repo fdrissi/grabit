@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -21,6 +21,10 @@ const useStyles = makeStyles({
 export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => {
   const classes = useStyles();
   const { description, item, orderItems, asap, deliveryDate, cost, share, errors } = formData;
+
+  // useEffect(() => {
+  //   console.log(formData)
+  // }, [formData])
 
   return (
     <Grid container >
@@ -48,17 +52,15 @@ export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => 
           error={errors.orderItems}
         />
       </ Grid>
-       
       <Grid item xs={12} >
         <Grid container justify="space-between" className={classes.mb}>
           <Grid item xs={5}>
-            <Input 
-              label="Date" 
-              type="text" 
+            <label className={classes.label}>Date</label>
+            <CheckBox 
+              label="ASAP" 
               name="asap" 
               value={asap} 
-              handleChange={handleChange} 
-              error={errors.asap} 
+              handleChange={handleChange}
             />
           </ Grid>
           <Grid item xs={5}>
@@ -69,19 +71,11 @@ export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => 
               value={deliveryDate} 
               handleChange={handleChange} 
               error={errors.deliveryDate} 
+              disabled={asap}
             />
           </ Grid>
         </ Grid>        
       </Grid>
-      <Grid item xs={12} className={classes.mb}>
-        <CheckBox 
-          label="Accept share courier with another customer" 
-          name="share" 
-          check={share} 
-          handleChange={handleChange}
-        />
-        <label className={classes.label}>Shared courier cost 7.5MAD instead of 10MAD, tell the user some details about in which case courier shared.</label>
-      </ Grid>
       <Grid item xs={12} className={classes.mb}>
         <Input 
           label="Order Cost" 
@@ -91,6 +85,15 @@ export default ({ formData, handleAddItem, handleDeleteItem, handleChange }) => 
           handleChange={handleChange} 
           error={errors.cost} 
         />
+      </ Grid>
+      <Grid item xs={12} className={classes.mb}>
+        <CheckBox 
+          label="Accept share courier with another customer" 
+          name="share" 
+          value={share} 
+          handleChange={handleChange}
+        />
+        <label className={classes.label}>Shared courier cost 7.5MAD instead of 10MAD, tell the user some details about in which case courier shared.</label>
       </ Grid>
     </Grid>
   );

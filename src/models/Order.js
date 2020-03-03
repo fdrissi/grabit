@@ -28,11 +28,36 @@ const orderSchema = new MongoSchema({
   startAddress: {
     type: String,
   },
+  startAddressCoords: {
+    type: {
+      type: String,
+    },
+    coordinates: [],
+  },
   deliveryAddress: {
     type: String,
   },
+  deliveryAddressCoords: {
+    type: {
+      type: String,
+    },
+    coordinates: [],
+  },
   cost: {
     type: Number,
+  },
+  estimatedTime: {
+    type: Number,
+  },
+  acceptShare: {
+    type: Boolean,
+  },
+  sharedOrder: {
+    type: Boolean,
+  },
+  status: {
+    type: String,
+    default: 'Requested',
   },
 });
 

@@ -5,3 +5,7 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOAD_USER = "LOAD_USER";
 export const SET_ORDER = "SET_ORDER";
 export const UNSET_ORDER = "UNSET_ORDER";
+export const SET_DRIVERS = "SET_DRIVERS";
+export const ASSIGN_DRIVER = "ASSIGN_DRIVER";
+export const CONFIRM_ORDER = "CONFIRM_ORDER";
+export const UPDATE_ORDER = "UPDATE_ORDER";

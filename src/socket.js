@@ -47,6 +47,29 @@ module.exports = (server, expressSession) => {
       }
     });
 
+    // Driver new order
+    socket.on('newOrder', async (data) => {
+      const { order, driver } = data;
+      const { _id: driverId } = driver;
+
+      console.log(driverId, users, users[driverId]);
+      if (users[driverId]) {
+        console.log("emit");
+        io.sockets.to(users[driverId][0]).emit('newOrder', order);
+      }
+    });
+
+    // Driver accepted order
+    socket.on('orderAccepted', async (customer) => {
+      const { _id: customerId } = customer;
+
+      console.log(customerId, users, users[customerId]);
+      if (users[customerId]) {
+        console.log("emit");
+        io.sockets.to(users[customerId][0]).emit('orderAccepted', null);
+      }
+    });
+
     // user diconnected
     socket.on('disconnect', () => {
       const { userId: id } = socket;

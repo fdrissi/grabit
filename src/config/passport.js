@@ -1,4 +1,5 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models/User');
 const {
@@ -7,7 +8,7 @@ const {
   facebookCallback,
 } = require('./config');
 
-const facebookAuth = (passport) => {
+module.exports = (passport) => {
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
@@ -22,7 +23,8 @@ const facebookAuth = (passport) => {
     clientID: facebookId,
     clientSecret: facebookSecret,
     callbackURL: facebookCallback,
-    profileFields: ['id',
+    profileFields: [
+      'id',
       'first_name',
       'last_name',
     ],
@@ -41,6 +43,8 @@ const facebookAuth = (passport) => {
         // User already registred
         return done(null, user);
       }
+      // eslint-disable-next-line no-console
+      console.log(userType, req.session, req.sessionStore.sessions);
       const newUser = new User({
         facebookId: profile.id,
         name: `${firstName} ${lastName}`,
@@ -54,6 +58,28 @@ const facebookAuth = (passport) => {
       return done(error, false);
     }
   }));
-};
 
-module.exports = facebookAuth;
+  passport.use('local',
+    new LocalStrategy({
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    (async (email, password, done) => {
+      try {
+        const user = await User.findOne({
+          email,
+        });
+
+        if (!user) {
+          return done('User not found', false);
+        }
+
+        if (user.password !== password) {
+          return done('Wrong password', false);
+        }
+        return done(null, user);
+      } catch (error) {
+        done(error, false);
+      }
+    })));
+};

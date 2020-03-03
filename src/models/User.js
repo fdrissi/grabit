@@ -6,7 +6,6 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
   facebookId: {
     type: String,
-    required: true,
   },
   name: {
     type: String,
@@ -19,7 +18,7 @@ const userSchema = new Schema({
   },
   available: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   location: {
     type: {
@@ -41,15 +40,21 @@ const userSchema = new Schema({
     type: Number,
     default: 0,
   },
-  hasOrder: {
-    type: Boolean,
-    default: false,
+  assignedOrders: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Order',
+  }],
+  assignedOrdersCount: {
+    type: Number,
   },
   active: {
     type: Boolean,
     default: true,
   },
   type: {
+    type: String,
+  },
+  password: {
     type: String,
   },
 });
